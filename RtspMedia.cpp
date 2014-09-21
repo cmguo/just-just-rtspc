@@ -25,7 +25,7 @@ namespace ppbox
             boost::system::error_code ec1;
             PacketMedia::get_basic_info(info_, ec1);
             info_.flags |= ppbox::data::PacketMediaFlags::f_non_ordered;
-            info_.format = "rtp";
+            info_.format_type = "rtp";
         }
 
         RtspMedia::~RtspMedia()
@@ -49,7 +49,7 @@ namespace ppbox
             boost::system::error_code ec1;
             PacketMedia::get_basic_info(info_, ec1);
             info_.flags |= ppbox::data::PacketMediaFlags::f_non_ordered;
-            info_.format = "rtp";
+            info_.format_type = "rtp";
             if (!ec && source_->is_record()) {
                 info_.type = info_.vod;
                 info_.flags |= info_.f_seekable;

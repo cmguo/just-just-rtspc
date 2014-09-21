@@ -3,7 +3,7 @@
 #ifndef _PPBOX_RTSPC_RTSP_SOURCE_H_
 #define _PPBOX_RTSPC_RTSP_SOURCE_H_
 
-#include <ppbox/data/base/MediaInfo.h>
+#include <ppbox/avbase/MediaInfo.h>
 #include <ppbox/avbase/StreamInfo.h>
 
 #include <util/stream/Dual.h>
@@ -88,7 +88,7 @@ namespace ppbox
         public:
             bool is_record() const;
 
-            ppbox::data::MediaInfo const & info() const
+            ppbox::avbase::MediaInfo const & info() const
             {
                 return info_;
             }
@@ -140,7 +140,7 @@ namespace ppbox
             response_type resp_;
             util::protocol::RtspRequest request_;
             util::protocol::SessionDescription sdp_;
-            ppbox::data::MediaInfo info_;
+            ppbox::avbase::MediaInfo info_;
             //std::vector<ppbox::avbase::StreamInfo> streams_;
             std::vector<RtpInfo> rtp_infos_;
             std::string content_base_;
