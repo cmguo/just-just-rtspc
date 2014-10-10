@@ -5,14 +5,13 @@
 
 #include "ppbox/demux/packet/PacketDemuxer.h"
 
-#include <ppbox/avformat/flv/FlvMetaData.h>
-
 namespace ppbox
 {
     namespace rtspc
     {
 
         class RtpFilter;
+        class RtpParser;
 
         class RtpDemuxer
             : public ppbox::demux::PacketDemuxer
@@ -25,12 +24,17 @@ namespace ppbox
             virtual ~RtpDemuxer();
 
         protected:
+            void add_parser(
+                size_t index, 
+                RtpParser * parser);
+
+        protected:
             virtual bool check_open(
                 boost::system::error_code & ec);
 
         private:
-            ppbox::avformat::FlvMetaData meta_;
             RtpFilter * filter_;
+            std::vector<RtpParser *> parsers_;
         };
 
         PPBOX_REGISTER_PACKET_DEMUXER("rtp", RtpDemuxer);

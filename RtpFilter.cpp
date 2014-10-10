@@ -28,13 +28,13 @@ namespace ppbox
         }
 
         void RtpFilter::add_stream(
-            StreamInfo & info, 
+            size_t index, 
             RtpParser * parser)
         {
-            if (info.index >= sessions_.size()) {
-                sessions_.resize(info.index + 1);
+            if (index >= sessions_.size()) {
+                sessions_.resize(index + 1);
             }
-            sessions_[info.index].parser = parser;
+            sessions_[index].parser = parser;
         }
 
         bool RtpFilter::get_sample(

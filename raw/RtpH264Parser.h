@@ -1,7 +1,7 @@
 // RtpH264Parser.h
 
-#ifndef _PPBOX_RTSPC_RTP_H264_PARSER_H_
-#define _PPBOX_RTSPC_RTP_H264_PARSER_H_
+#ifndef _PPBOX_RTSPC_TS_RTP_H264_PARSER_H_
+#define _PPBOX_RTSPC_TS_RTP_H264_PARSER_H_
 
 #include "ppbox/rtspc/RtpParser.h"
 
@@ -48,4 +48,4 @@ namespace ppbox
     } // namespace rtspc
 } // namespace ppbox
 
-#endif // _PPBOX_RTSPC_RTP_H264_PARSER_H_
+#endif // _PPBOX_RTSPC_TS_RTP_H264_PARSER_H_

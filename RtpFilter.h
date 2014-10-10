@@ -26,7 +26,7 @@ namespace ppbox
 
         public:
             void add_stream(
-                ppbox::demux::StreamInfo & info,
+                size_t index, 
                 RtpParser * parser);
 
         public:

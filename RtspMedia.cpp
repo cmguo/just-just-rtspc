@@ -25,7 +25,9 @@ namespace ppbox
             boost::system::error_code ec1;
             PacketMedia::get_basic_info(info_, ec1);
             info_.flags |= ppbox::data::PacketMediaFlags::f_non_ordered;
-            info_.format_type = "rtp";
+            info_.format_type = url.param("format");
+            if (info_.format_type.empty())
+                info_.format_type = "rtp";
         }
 
         RtspMedia::~RtspMedia()
@@ -45,16 +47,15 @@ namespace ppbox
             boost::system::error_code const & ec, 
             MediaBase::response_type const & resp)
         {
-            info_ = source_->info();
+            ppbox::avbase::MediaInfo info = source_->info();
             boost::system::error_code ec1;
-            PacketMedia::get_basic_info(info_, ec1);
-            info_.flags |= ppbox::data::PacketMediaFlags::f_non_ordered;
-            info_.format_type = "rtp";
+            (ppbox::avbase::MediaBasicInfo &)info = info_;
             if (!ec && source_->is_record()) {
-                info_.type = info_.vod;
-                info_.flags |= info_.f_seekable;
-                info_.flags |= info_.f_pauseable;
+                info.type = info.vod;
+                info.flags |= info.f_seekable;
+                info.flags |= info.f_pauseable;
             }
+            info_ = info;
             resp(ec);
         }
 
@@ -71,7 +72,7 @@ namespace ppbox
         }
 
         bool RtspMedia::get_basic_info(
-            ppbox::data::MediaBasicInfo & info,
+            ppbox::avbase::MediaBasicInfo & info,
             boost::system::error_code & ec) const
         {
             info = info_;
@@ -80,7 +81,7 @@ namespace ppbox
         }
 
         bool RtspMedia::get_info(
-            ppbox::data::MediaInfo & info,
+            ppbox::avbase::MediaInfo & info,
             boost::system::error_code & ec) const
         {
             info = info_;

@@ -1,7 +1,7 @@
 // RtpH264Parser.cpp
 
 #include "ppbox/rtspc/Common.h"
-#include "ppbox/rtspc/RtpH264Parser.h"
+#include "ppbox/rtspc/raw/RtpH264Parser.h"
 
 #include <ppbox/avbase/stream/SampleBuffers.h>
 using namespace ppbox::avbase;
