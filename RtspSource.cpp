@@ -17,6 +17,7 @@ using namespace util::protocol;
 #include <framework/logger/Logger.h>
 #include <framework/logger/StreamRecord.h>
 #include <framework/logger/StringRecord.h>
+#include <framework/system/LogicError.h>
 
 namespace ppbox
 {
@@ -24,6 +25,9 @@ namespace ppbox
     {
 
         FRAMEWORK_LOGGER_DECLARE_MODULE_LEVEL("ppbox.rtspc.RtspSource", framework::logger::Debug);
+
+        using util::protocol::rtsp_field::f_range;
+        using util::protocol::rtsp_field::f_transport;
 
         RtspSource::RtspSource(
             boost::asio::io_service & io_svc)
@@ -75,7 +79,14 @@ namespace ppbox
             }
 
             RtspSession::start();
-            on_recv(RtspResponse());
+
+            on_connect();
+        }
+
+        void RtspSource::on_connect()
+        {
+            request_.head().method = RtspRequestHead::options;
+            post(request_);
         }
 
         void RtspSource::on_recv(
@@ -84,9 +95,6 @@ namespace ppbox
             req.head().get_content(std::cout);
 
             RtspResponse resp;
-
-            resp.head().get_content(std::cout);
-
             post(resp);
         }
 
@@ -110,22 +118,28 @@ namespace ppbox
             RtspRequestHead & head(request_.head());
             switch (head.method) {
                 case RtspRequestHead::invalid_method:
+                    return;
+                case RtspRequestHead::options:
+                    head.erase("Require");
                     head.method = RtspRequestHead::describe;
                     break;
                 case RtspRequestHead::describe:
                     content_base_ = resp.head()["Content-Base"];
                     if (content_base_.empty()) {
                         content_base_ = head.path + "/";
-                    } else {
-                        content_base_ = content_base_.substr(1, content_base_.size() - 2); // clear {}
                     }
                     parse_sdp(resp.data(), ec);
                     if (ec) break;
                     // pass down
                 case RtspRequestHead::setup:
                     if (head.method == RtspRequestHead::setup) {
+                        std::string sessionId = resp.head()["Session"];
+                        std::string::size_type p = sessionId.find(';');
+                        if (p != std::string::npos) 
+                            sessionId = sessionId.substr(0, p);
+                        head["Session"] = sessionId;
                         connect_transport(
-                            rtp_socket_, resp.head().transport.get(), ec);
+                            rtp_socket_, resp.head()[f_transport], ec);
                     } else {
                         head.method = RtspRequestHead::setup;
                     }
@@ -139,13 +153,13 @@ namespace ppbox
                             transport, 
                             transport,
                             ec);
-                        head.transport = transport;
+                        head[f_transport] = transport;
                         ++setup_step_;
                         break;
                     }
                     head.method = RtspRequestHead::play;
                     head.path = content_base_;
-                    head.transport.reset();
+                    head[f_transport].reset();
                     //head.range = 
                     break;
                 case RtspRequestHead::play:
@@ -159,10 +173,21 @@ namespace ppbox
 
             if (ec) {
                 response(ec);
-            } else {
-                head.get_content(std::cout);
+            } else if (head.method != RtspRequestHead::invalid_method) {
                 post(request_);
             }
+        }
+
+        void RtspSource::on_sent(
+            RtspResponse const & resp)
+        {
+            resp.head().get_content(std::cout);
+        }
+
+        void RtspSource::on_sent(
+            RtspRequest const & req)
+        {
+            req.head().get_content(std::cout);
         }
 
         void RtspSource::on_error(
@@ -200,13 +225,14 @@ namespace ppbox
             boost::system::error_code & ec)
         {
             stop();
-            return !RtspSession::close(ec);
+            ec.clear();
+            return true;
         }
 
         bool RtspSource::cancel(
             boost::system::error_code & ec)
         {
-            return !RtspSession::cancel_forever(ec);
+            return !RtspSession::cancel(ec);
         }
 
         size_t RtspSource::private_read_some(
@@ -279,6 +305,11 @@ namespace ppbox
                 md.get_fmtp(rtp.format, rtp.fparam);
                 md.attr_get("control", rtp.control);
             }
+        }
+
+        boost::system::error_code RtspSourceTraits::error_not_found()
+        {
+            return framework::system::logic_error::not_supported;
         }
 
     } // namespace rtspc

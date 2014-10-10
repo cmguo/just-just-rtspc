@@ -37,8 +37,6 @@ namespace ppbox
             std::vector<RtpParser *> parsers_;
         };
 
-        PPBOX_REGISTER_PACKET_DEMUXER("rtp", RtpDemuxer);
-
     } // namespace rtspc
 } // namespace ppbox
 

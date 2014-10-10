@@ -118,11 +118,20 @@ namespace ppbox
             void handle_connect(
                 boost::system::error_code const & ec);
 
+        protected:
+            virtual void on_connect();
+
             // RtspSession
             virtual void on_recv(
                 RtspRequest const & req);
 
             virtual void on_recv(
+                RtspResponse const & resp);
+
+            virtual void on_sent(
+                RtspRequest const & req);
+
+            virtual void on_sent(
                 RtspResponse const & resp);
 
             virtual void on_error(
@@ -136,21 +145,36 @@ namespace ppbox
                 boost::asio::streambuf const & data, 
                 boost::system::error_code & ec);
 
-        private:
-            response_type resp_;
+        protected:
+            util::stream::Dual * rtp_socket_;
             util::protocol::RtspRequest request_;
             util::protocol::SessionDescription sdp_;
             ppbox::avbase::MediaInfo info_;
-            //std::vector<ppbox::avbase::StreamInfo> streams_;
             std::vector<RtpInfo> rtp_infos_;
             std::string content_base_;
-            util::stream::Dual * rtp_socket_;
             size_t setup_step_;
+
+        private:
+            response_type resp_;
         };
 
         UTIL_REGISTER_URL_SOURCE("rtsp", RtspSource);
 
+        struct RtspSourceTraits
+            : util::tools::ClassFactoryTraits
+        {
+            typedef std::string key_type;
+            typedef RtspSource * (create_proto)(
+                boost::asio::io_service &);
+
+            static boost::system::error_code error_not_found();
+        };
+
+        typedef util::tools::ClassFactory<RtspSourceTraits> RtspSourceFactory;
+
     } // namespace data
 } // namespace ppbox
+
+#define PPBOX_REGISTER_RTSP_SOURCE(k, c) UTIL_REGISTER_CLASS(ppbox::rtspc::RtspSourceFactory, k, c)
 
 #endif // _PPBOX_RTSPC_RTSP_SOURCE_H_
