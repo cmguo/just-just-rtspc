@@ -3,6 +3,8 @@
 #ifndef _PPBOX_RTSPC_RTSP_SOURCE_H_
 #define _PPBOX_RTSPC_RTSP_SOURCE_H_
 
+#include "ppbox/rtspc/RtpInfo.h"
+
 #include <ppbox/avbase/MediaInfo.h>
 #include <ppbox/avbase/StreamInfo.h>
 
@@ -21,20 +23,6 @@ namespace ppbox
 
         using util::protocol::RtspRequest;
         using util::protocol::RtspResponse;
-
-        struct RtpInfo
-        {
-            std::string type;
-            int format;
-            std::string codec;
-            int clock;
-            std::string param;
-            std::string fparam;
-            std::string control;
-            boost::uint32_t ssrc;
-            boost::uint32_t sequence;
-            boost::uint32_t timestamp;
-        };
 
         class RtspSource
             : public util::stream::UrlSource

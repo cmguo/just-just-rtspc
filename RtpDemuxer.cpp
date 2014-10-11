@@ -3,6 +3,7 @@
 #include "ppbox/rtspc/Common.h"
 #include "ppbox/rtspc/RtpDemuxer.h"
 #include "ppbox/rtspc/RtpFilter.h"
+#include "ppbox/rtspc/RtspMedia.h"
 
 #include <framework/logger/Logger.h>
 #include <framework/logger/StreamRecord.h>
@@ -33,7 +34,7 @@ namespace ppbox
             size_t index, 
             RtpParser * parser)
         {
-            filter_->add_stream(
+            filter_->add_parser(
                 index, 
                 parser);
         }
@@ -45,6 +46,13 @@ namespace ppbox
                 filter_ = new RtpFilter;
                 add_filter(filter_);
             }
+
+            RtspMedia const & media(static_cast<RtspMedia const &>(PacketDemuxer::media()));
+
+            std::vector<RtpInfo> const & rtp_infos = 
+                media.rtsp_source().rtp_infos();
+
+            filter_->set_streams(rtp_infos);
 
             return true;
         }

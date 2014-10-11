@@ -28,6 +28,7 @@ namespace ppbox
 
         using util::protocol::rtsp_field::f_range;
         using util::protocol::rtsp_field::f_transport;
+        using util::protocol::rtsp_field::f_rtp_info;
 
         RtspSource::RtspSource(
             boost::asio::io_service & io_svc)
@@ -48,7 +49,9 @@ namespace ppbox
             boost::uint64_t end, 
             boost::system::error_code & ec)
         {
-            request_.head().path = url.to_string();
+            framework::string::Url url1(url);
+            url1.encode();
+            request_.head().path = url1.to_string();
             is_open(ec);
             return !ec;
         }
@@ -59,7 +62,9 @@ namespace ppbox
             boost::uint64_t end, 
             response_type const & resp)
         {
-            request_.head().path = url.to_string();
+            framework::string::Url url1(url);
+            url1.encode();
+            request_.head().path = url1.to_string();
             resp_ = resp;
             framework::network::NetName addr(url.host_svc());
             if (addr.svc().empty())
@@ -144,9 +149,10 @@ namespace ppbox
                         head.method = RtspRequestHead::setup;
                     }
                     if (setup_step_ < rtp_infos_.size()) {
-                        head.path = content_base_ + sdp_.media(setup_step_).attr_get("control");
-                        // RTP/AVP;unicast;ort=2554-2555;server_port=53016-53017;ssrc=0000456B
-                        std::string transport = "RTP/AVP/TCP;unicast";
+                        RtpInfo & info(rtp_infos_[setup_step_]);
+                        head.path = content_base_ + info.control;
+                        //std::string transport = "RTP/AVP/TCP;unicast";
+                        std::string transport = "RTP/AVP/UDP;unicast";
                         create_transport(
                             rtp_socket_, 
                             *this, 
@@ -163,6 +169,16 @@ namespace ppbox
                     //head.range = 
                     break;
                 case RtspRequestHead::play:
+                    // RTP-Info:
+                    // url=rtsp://192.168.33.115:8554/1.mp4/trackID=0;seq=60408;rtptime=2754825454
+                    {
+                        rtsp_field::RtpInfo rtp_info;
+                        rtp_info.from_string(resp.head()[f_rtp_info]);
+                        for (size_t i = 0; i < rtp_info.size(); ++i) {
+                            rtp_infos_[i].sequence = rtp_info[i].seq;
+                            rtp_infos_[i].timestamp = rtp_info[i].rtptime;
+                        }
+                    }
                     response(ec);
                     return;
                 case RtspRequestHead::pause:
@@ -304,6 +320,8 @@ namespace ppbox
                 md.get_rtpmap(rtp.format, rtp.codec, rtp.clock, rtp.param);
                 md.get_fmtp(rtp.format, rtp.fparam);
                 md.attr_get("control", rtp.control);
+                if (rtp.control.compare(0, content_base_.size(), content_base_) == 0)
+                    rtp.control = rtp.control.substr(content_base_.size());
             }
         }
 

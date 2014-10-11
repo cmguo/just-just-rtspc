@@ -27,13 +27,19 @@ namespace ppbox
         {
         }
 
-        void RtpFilter::add_stream(
+        void RtpFilter::set_streams(
+            std::vector<RtpInfo> const & rtp_infos)
+        {
+            for (size_t i = 0; i < rtp_infos.size(); ++i) {
+                sessions_.push_back(RtpSession(rtp_infos[i]));
+            }
+        }
+
+        void RtpFilter::add_parser(
             size_t index, 
             RtpParser * parser)
         {
-            if (index >= sessions_.size()) {
-                sessions_.resize(index + 1);
-            }
+            assert(index < sessions_.size());
             sessions_[index].parser = parser;
         }
 
@@ -78,7 +84,10 @@ namespace ppbox
                 if (!parse(sample, ec))
                     continue;
                 RtpSession & session = sessions_[sample.itrack];
-                //LOG_TRACE("[get_sample2] sequence: " << rtp_head_.sequence);
+                //LOG_TRACE("[get_sample2] itrack: " << sample.itrack 
+                //    << " sequence: " << rtp_head_.sequence
+                //    << " size: " << sample.size 
+                //    << " mark: " << int(rtp_head_.mpt >> 7));
                 if (session.seq_base == rtp_head_.sequence) {
                     ++session.seq_base;
                     if (!session.samples.empty()) {
@@ -179,15 +188,16 @@ namespace ppbox
             sample.flags = 0;
             sample.size -= 4 + sizeof(rtp_head_);
             sample.itrack = header[1] >> 1;
-            sample.dts = rtp_head_.timestamp;
+            RtpSession & session = sessions_[sample.itrack];
+            sample.dts = session.timestamp_.transfer(rtp_head_.timestamp) - session.rtp_info->timestamp;
             sample.duration = 0;
             sample.data.front() = sample.data.front() + 4 + sizeof(rtp_head_);
             sample.context = *(void **)&rtp_head_;
 
-            LOG_TRACE("[parse] itrack: " << sample.itrack 
-                << " sequence: " << rtp_head_.sequence
-                << " size: " << sample.size 
-                << " mark: " << int(rtp_head_.mpt >> 7));
+            //LOG_TRACE("[parse] itrack: " << sample.itrack 
+            //    << " sequence: " << rtp_head_.sequence
+            //    << " size: " << sample.size 
+            //    << " mark: " << int(rtp_head_.mpt >> 7));
             return true;
         }
 

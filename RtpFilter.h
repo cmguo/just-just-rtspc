@@ -3,6 +3,8 @@
 #ifndef _PPBOX_RTSPC_RTP_FILTER_H_
 #define _PPBOX_RTSPC_RTP_FILTER_H_
 
+#include "ppbox/rtspc/RtpInfo.h"
+
 #include <ppbox/demux/packet/Filter.h>
 
 #include <util/protocol/rtsp/rtp/RtpPacket.h>
@@ -25,7 +27,10 @@ namespace ppbox
             ~RtpFilter();
 
         public:
-            void add_stream(
+            void set_streams(
+                std::vector<RtpInfo> const & rtp_infos);
+
+            void add_parser(
                 size_t index, 
                 RtpParser * parser);
 
@@ -58,13 +63,16 @@ namespace ppbox
         private:
             struct RtpSession
             {
+                RtpInfo const * rtp_info;
                 boost::uint16_t seq_base; // next required sequence
                 std::deque<ppbox::demux::Sample> samples; // unordered samples
                 framework::system::LimitNumber<32> timestamp_;
                 RtpParser * parser;
 
-                RtpSession()
-                    : seq_base(0)
+                RtpSession(
+                    RtpInfo const & rtp_info)
+                    : rtp_info(&rtp_info)
+                    , seq_base(rtp_info.sequence)
                     , parser(NULL)
                 {
                 }
