@@ -8,6 +8,7 @@
 #include <util/tools/ClassRegister.h>
 
 #include "ppbox/rtspc/raw/RtpH264Parser.h"
+#include "ppbox/rtspc/raw/RtpMpeg4GenericParser.h"
 
 using namespace ppbox::demux;
 
