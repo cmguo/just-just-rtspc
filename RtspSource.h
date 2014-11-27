@@ -1,12 +1,12 @@
 // RtspSource.h
 
-#ifndef _PPBOX_RTSPC_RTSP_SOURCE_H_
-#define _PPBOX_RTSPC_RTSP_SOURCE_H_
+#ifndef _JUST_RTSPC_RTSP_SOURCE_H_
+#define _JUST_RTSPC_RTSP_SOURCE_H_
 
-#include "ppbox/rtspc/RtpInfo.h"
+#include "just/rtspc/RtpInfo.h"
 
-#include <ppbox/avbase/MediaInfo.h>
-#include <ppbox/avbase/StreamInfo.h>
+#include <just/avbase/MediaInfo.h>
+#include <just/avbase/StreamInfo.h>
 
 #include <util/stream/Dual.h>
 #include <util/stream/UrlSource.h>
@@ -14,7 +14,7 @@
 #include <util/protocol/rtsp/RtspSession.h>
 #include <util/protocol/rtsp/SessionDescription.h>
 
-namespace ppbox
+namespace just
 {
     namespace rtspc
     {
@@ -76,7 +76,7 @@ namespace ppbox
         public:
             bool is_record() const;
 
-            ppbox::avbase::MediaInfo const & info() const
+            just::avbase::MediaInfo const & info() const
             {
                 return info_;
             }
@@ -137,7 +137,7 @@ namespace ppbox
             util::stream::Dual * rtp_socket_;
             util::protocol::RtspRequest request_;
             util::protocol::SessionDescription sdp_;
-            ppbox::avbase::MediaInfo info_;
+            just::avbase::MediaInfo info_;
             std::vector<RtpInfo> rtp_infos_;
             std::string content_base_;
             size_t setup_step_;
@@ -161,8 +161,8 @@ namespace ppbox
         typedef util::tools::ClassFactory<RtspSourceTraits> RtspSourceFactory;
 
     } // namespace data
-} // namespace ppbox
+} // namespace just
 
-#define PPBOX_REGISTER_RTSP_SOURCE(k, c) UTIL_REGISTER_CLASS(ppbox::rtspc::RtspSourceFactory, k, c)
+#define JUST_REGISTER_RTSP_SOURCE(k, c) UTIL_REGISTER_CLASS(just::rtspc::RtspSourceFactory, k, c)
 
-#endif // _PPBOX_RTSPC_RTSP_SOURCE_H_
+#endif // _JUST_RTSPC_RTSP_SOURCE_H_

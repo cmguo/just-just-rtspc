@@ -1,13 +1,13 @@
 // ClassRegister.h
 
-#ifndef _PPBOX_RTSPC_CLASS_REGISTER_H_
-#define _PPBOX_RTSPC_CLASS_REGISTER_H_
+#ifndef _JUST_RTSPC_CLASS_REGISTER_H_
+#define _JUST_RTSPC_CLASS_REGISTER_H_
 
 #include <util/tools/ClassRegister.h>
 
-#include "ppbox/rtspc/RtspSource.h"
-#include "ppbox/rtspc/RtspMedia.h"
-#include "ppbox/rtspc/raw/RtpRawDemuxer.h"
-#include "ppbox/rtspc/ts/RtpTsDemuxer.h"
+#include "just/rtspc/RtspSource.h"
+#include "just/rtspc/RtspMedia.h"
+#include "just/rtspc/raw/RtpRawDemuxer.h"
+#include "just/rtspc/ts/RtpTsDemuxer.h"
 
-#endif //_PPBOX_RTSPC_CLASS_REGISTER_H_
+#endif //_JUST_RTSPC_CLASS_REGISTER_H_

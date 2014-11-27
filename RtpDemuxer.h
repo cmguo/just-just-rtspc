@@ -1,11 +1,11 @@
 // RtpDemuxer.h
 
-#ifndef _PPBOX_RTSPC_RTP_DEMUXER_H_
-#define _PPBOX_RTSPC_RTP_DEMUXER_H_
+#ifndef _JUST_RTSPC_RTP_DEMUXER_H_
+#define _JUST_RTSPC_RTP_DEMUXER_H_
 
-#include "ppbox/demux/packet/PacketDemuxer.h"
+#include "just/demux/packet/PacketDemuxer.h"
 
-namespace ppbox
+namespace just
 {
     namespace rtspc
     {
@@ -14,12 +14,12 @@ namespace ppbox
         class RtpParser;
 
         class RtpDemuxer
-            : public ppbox::demux::PacketDemuxer
+            : public just::demux::PacketDemuxer
         {
         public:
             RtpDemuxer(
                 boost::asio::io_service & io_svc, 
-                ppbox::data::PacketMedia & media);
+                just::data::PacketMedia & media);
 
             virtual ~RtpDemuxer();
 
@@ -38,6 +38,6 @@ namespace ppbox
         };
 
     } // namespace rtspc
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_RTSPC_RTP_DEMUXER_H_
+#endif // _JUST_RTSPC_RTP_DEMUXER_H_

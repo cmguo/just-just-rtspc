@@ -1,30 +1,30 @@
 // RtpTsDemuxer.cpp
 
-#include "ppbox/rtspc/Common.h"
-#include "ppbox/rtspc/ts/RtpTsDemuxer.h"
-#include "ppbox/rtspc/ts/RtpTsParser.h"
-#include "ppbox/rtspc/RtpFilter.h"
+#include "just/rtspc/Common.h"
+#include "just/rtspc/ts/RtpTsDemuxer.h"
+#include "just/rtspc/ts/RtpTsParser.h"
+#include "just/rtspc/RtpFilter.h"
 
-using namespace ppbox::demux;
+using namespace just::demux;
 
-#include <ppbox/avformat/Format.h>
-using namespace ppbox::avformat;
+#include <just/avformat/Format.h>
+using namespace just::avformat;
 
 #include <util/buffers/BuffersCopy.h>
 
 #include <framework/logger/Logger.h>
 #include <framework/logger/StreamRecord.h>
 
-FRAMEWORK_LOGGER_DECLARE_MODULE_LEVEL("ppbox.rtspc.RtpTsDemuxer", framework::logger::Debug);
+FRAMEWORK_LOGGER_DECLARE_MODULE_LEVEL("just.rtspc.RtpTsDemuxer", framework::logger::Debug);
 
-namespace ppbox
+namespace just
 {
     namespace rtspc
     {
 
         RtpTsDemuxer::RtpTsDemuxer(
             boost::asio::io_service & io_svc, 
-            ppbox::data::PacketMedia & media)
+            just::data::PacketMedia & media)
             : RtpDemuxer(io_svc, media)
             , ts_parser_(new RtpTsParser(io_svc))
         {
@@ -54,4 +54,4 @@ namespace ppbox
         }
 
     } // namespace rtspc
-} // namespace ppbox
+} // namespace just

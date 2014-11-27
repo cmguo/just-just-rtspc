@@ -1,14 +1,14 @@
 // RtpTsParser.cpp
 
-#include "ppbox/rtspc/Common.h"
-#include "ppbox/rtspc/ts/RtpTsParser.h"
+#include "just/rtspc/Common.h"
+#include "just/rtspc/ts/RtpTsParser.h"
 
-#include <ppbox/demux/basic/mp2/TsDemuxer.h>
-using namespace ppbox::demux;
+#include <just/demux/basic/mp2/TsDemuxer.h>
+using namespace just::demux;
 
-#include "ppbox/rtspc/ts/RtpTsBuffer.h"
+#include "just/rtspc/ts/RtpTsBuffer.h"
 
-namespace ppbox
+namespace just
 {
     namespace rtspc
     {
@@ -64,4 +64,4 @@ namespace ppbox
         }
 
     } // namespace rtspc
-} // namespace ppbox
+} // namespace just

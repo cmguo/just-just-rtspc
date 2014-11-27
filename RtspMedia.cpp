@@ -1,10 +1,10 @@
 // RtspMedia.cpp
 
-#include "ppbox/rtspc/Common.h"
-#include "ppbox/rtspc/RtspMedia.h"
+#include "just/rtspc/Common.h"
+#include "just/rtspc/RtspMedia.h"
 
 #include <util/tools/ClassRegister.h>
-#include "ppbox/rtspc/RtspSourceWfd.h"
+#include "just/rtspc/RtspSourceWfd.h"
 
 #include <framework/logger/Logger.h>
 #include <framework/logger/StreamRecord.h>
@@ -12,9 +12,9 @@
 
 #include <boost/bind.hpp>
 
-FRAMEWORK_LOGGER_DECLARE_MODULE_LEVEL("ppbox.rtspc.RtspMedia", framework::logger::Debug);
+FRAMEWORK_LOGGER_DECLARE_MODULE_LEVEL("just.rtspc.RtspMedia", framework::logger::Debug);
 
-namespace ppbox
+namespace just
 {
     namespace rtspc
     {
@@ -27,7 +27,7 @@ namespace ppbox
         {
             boost::system::error_code ec;
             PacketMedia::get_basic_info(info_, ec);
-            info_.flags |= ppbox::data::PacketMediaFlags::f_non_ordered;
+            info_.flags |= just::data::PacketMediaFlags::f_non_ordered;
             info_.format_type = url.param("format");
             if (info_.format_type.empty())
                 info_.format_type = "rtp";
@@ -65,9 +65,9 @@ namespace ppbox
             boost::system::error_code const & ec, 
             MediaBase::response_type const & resp)
         {
-            ppbox::avbase::MediaInfo info = source_->info();
+            just::avbase::MediaInfo info = source_->info();
             boost::system::error_code ec1;
-            (ppbox::avbase::MediaBasicInfo &)info = info_;
+            (just::avbase::MediaBasicInfo &)info = info_;
             if (!ec && source_->is_record()) {
                 info.type = info.vod;
                 info.flags |= info.f_seekable;
@@ -91,7 +91,7 @@ namespace ppbox
         }
 
         bool RtspMedia::get_basic_info(
-            ppbox::avbase::MediaBasicInfo & info,
+            just::avbase::MediaBasicInfo & info,
             boost::system::error_code & ec) const
         {
             info = info_;
@@ -100,7 +100,7 @@ namespace ppbox
         }
 
         bool RtspMedia::get_info(
-            ppbox::avbase::MediaInfo & info,
+            just::avbase::MediaInfo & info,
             boost::system::error_code & ec) const
         {
             info = info_;
@@ -109,7 +109,7 @@ namespace ppbox
         }
 
         bool RtspMedia::get_packet_feature(
-            ppbox::data::PacketFeature & feature,
+            just::data::PacketFeature & feature,
             boost::system::error_code & ec) const
         {
             feature.piece_size = 1024;
@@ -126,4 +126,4 @@ namespace ppbox
         }
 
     } // rtspc
-} // ppbox
+} // just

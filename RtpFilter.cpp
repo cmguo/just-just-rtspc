@@ -1,22 +1,22 @@
 // RtpFilter.cpp
 
-#include "ppbox/rtspc/Common.h"
-#include "ppbox/rtspc/RtpFilter.h"
-#include "ppbox/rtspc/RtpParser.h"
+#include "just/rtspc/Common.h"
+#include "just/rtspc/RtpFilter.h"
+#include "just/rtspc/RtpParser.h"
 
-using namespace ppbox::demux;
+using namespace just::demux;
 
 #include <framework/system/BytesOrder.h>
 #include <framework/logger/Logger.h>
 #include <framework/logger/StreamRecord.h>
 #include <framework/logger/DataRecord.h>
 
-namespace ppbox
+namespace just
 {
     namespace rtspc
     {
 
-        FRAMEWORK_LOGGER_DECLARE_MODULE_LEVEL("ppbox.rtspc.RtpFilter", framework::logger::Debug);
+        FRAMEWORK_LOGGER_DECLARE_MODULE_LEVEL("just.rtspc.RtpFilter", framework::logger::Debug);
 
         RtpFilter::RtpFilter()
             : ready_session_(NULL)
@@ -177,7 +177,7 @@ namespace ppbox
                 rtp_head_.timestamp = framework::system::BytesOrder::big_endian_to_host(rtp_head_.timestamp);
                 rtp_head_.ssrc = framework::system::BytesOrder::big_endian_to_host(rtp_head_.ssrc);
             } else {
-                //ppbox::data::PacketSource * packet_source = (ppbox::data::PacketSource *)sample.context;
+                //just::data::PacketSource * packet_source = (just::data::PacketSource *)sample.context;
                 //RtspSource & source = static_cast<RtspSource &>(packet_source->source());
                 //util::stream::Dual & rtp_socket = source.rtp_socket();
                 //rtp_socket.write_some(rtcp);
@@ -202,4 +202,4 @@ namespace ppbox
         }
 
     } // namespace rtspc
-} // namespace ppbox
+} // namespace just

@@ -1,11 +1,11 @@
 // RtspSourceWfd.h
 
-#ifndef _PPBOX_RTSPC_RTSP_SOURCE_WFD_H_
-#define _PPBOX_RTSPC_RTSP_SOURCE_WFD_H_
+#ifndef _JUST_RTSPC_RTSP_SOURCE_WFD_H_
+#define _JUST_RTSPC_RTSP_SOURCE_WFD_H_
 
-#include "ppbox/rtspc/RtspSource.h" 
+#include "just/rtspc/RtspSource.h" 
 
-namespace ppbox
+namespace just
 {
     namespace rtspc
     {
@@ -31,9 +31,9 @@ namespace ppbox
                 RtspResponse const & resp);
         };
 
-        PPBOX_REGISTER_RTSP_SOURCE("wfd", RtspSourceWfd);
+        JUST_REGISTER_RTSP_SOURCE("wfd", RtspSourceWfd);
 
     } // namespace data
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_RTSPC_RTSP_SOURCE_WFD_H_
+#endif // _JUST_RTSPC_RTSP_SOURCE_WFD_H_

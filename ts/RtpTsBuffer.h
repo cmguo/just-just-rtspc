@@ -1,11 +1,11 @@
 // RtpTsDemuxer.h
 
-#ifndef _PPBOX_RTSPC_TS_RTP_TS_DEMUXER_H_
-#define _PPBOX_RTSPC_TS_RTP_TS_DEMUXER_H_
+#ifndef _JUST_RTSPC_TS_RTP_TS_DEMUXER_H_
+#define _JUST_RTSPC_TS_RTP_TS_DEMUXER_H_
 
 #include "util/buffers/StlBuffer.h"
 
-namespace ppbox
+namespace just
 {
     namespace rtspc
     {
@@ -31,8 +31,8 @@ namespace ppbox
             void get(
                 Sample & sample)
             {
-                std::vector<ppbox::data::DataBlock> & blocks = 
-                    *(std::vector<ppbox::data::DataBlock> *)sample.context;
+                std::vector<just::data::DataBlock> & blocks = 
+                    *(std::vector<just::data::DataBlock> *)sample.context;
 
                 std::deque<boost::asio::const_buffer> datas;
                 BufferIterator iter(iter_);
@@ -209,6 +209,6 @@ namespace ppbox
         };
 
     } // namespace rtspc
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_RTSPC_TS_RTP_TS_DEMUXER_H_
+#endif // _JUST_RTSPC_TS_RTP_TS_DEMUXER_H_

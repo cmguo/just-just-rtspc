@@ -1,23 +1,23 @@
 // RtpDemuxer.cpp
 
-#include "ppbox/rtspc/Common.h"
-#include "ppbox/rtspc/RtpDemuxer.h"
-#include "ppbox/rtspc/RtpFilter.h"
-#include "ppbox/rtspc/RtspMedia.h"
+#include "just/rtspc/Common.h"
+#include "just/rtspc/RtpDemuxer.h"
+#include "just/rtspc/RtpFilter.h"
+#include "just/rtspc/RtspMedia.h"
 
 #include <framework/logger/Logger.h>
 #include <framework/logger/StreamRecord.h>
 
-FRAMEWORK_LOGGER_DECLARE_MODULE_LEVEL("ppbox.rtspc.RtpDemuxer", framework::logger::Debug);
+FRAMEWORK_LOGGER_DECLARE_MODULE_LEVEL("just.rtspc.RtpDemuxer", framework::logger::Debug);
 
-namespace ppbox
+namespace just
 {
     namespace rtspc
     {
 
         RtpDemuxer::RtpDemuxer(
             boost::asio::io_service & io_svc, 
-            ppbox::data::PacketMedia & media)
+            just::data::PacketMedia & media)
             : PacketDemuxer(io_svc, media)
             , filter_(NULL)
         {
@@ -58,4 +58,4 @@ namespace ppbox
         }
 
     } // namespace rtspc
-} // namespace ppbox
+} // namespace just

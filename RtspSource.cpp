@@ -1,9 +1,9 @@
 // RtspSource.cpp
 
-#include "ppbox/rtspc/Common.h"
-#include "ppbox/rtspc/RtspSource.h"
+#include "just/rtspc/Common.h"
+#include "just/rtspc/RtspSource.h"
 
-#include <ppbox/avbase/StreamType.h>
+#include <just/avbase/StreamType.h>
 
 #include <util/protocol/rtsp/RtspError.h>
 #include <util/protocol/rtsp/RtspSocket.hpp>
@@ -19,12 +19,12 @@ using namespace util::protocol;
 #include <framework/logger/StringRecord.h>
 #include <framework/system/LogicError.h>
 
-namespace ppbox
+namespace just
 {
     namespace rtspc
     {
 
-        FRAMEWORK_LOGGER_DECLARE_MODULE_LEVEL("ppbox.rtspc.RtspSource", framework::logger::Debug);
+        FRAMEWORK_LOGGER_DECLARE_MODULE_LEVEL("just.rtspc.RtspSource", framework::logger::Debug);
 
         using util::protocol::rtsp_field::f_range;
         using util::protocol::rtsp_field::f_transport;
@@ -331,4 +331,4 @@ namespace ppbox
         }
 
     } // namespace rtspc
-} // namespace ppbox
+} // namespace just

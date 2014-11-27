@@ -1,33 +1,33 @@
 // RtpRawDemuxer.cpp
 
-#include "ppbox/rtspc/Common.h"
-#include "ppbox/rtspc/raw/RtpRawDemuxer.h"
-#include "ppbox/rtspc/RtpFilter.h"
-#include "ppbox/rtspc/RtspMedia.h"
+#include "just/rtspc/Common.h"
+#include "just/rtspc/raw/RtpRawDemuxer.h"
+#include "just/rtspc/RtpFilter.h"
+#include "just/rtspc/RtspMedia.h"
 
 #include <util/tools/ClassRegister.h>
 
-#include "ppbox/rtspc/raw/RtpH264Parser.h"
-#include "ppbox/rtspc/raw/RtpMpeg4GenericParser.h"
+#include "just/rtspc/raw/RtpH264Parser.h"
+#include "just/rtspc/raw/RtpMpeg4GenericParser.h"
 
-using namespace ppbox::demux;
+using namespace just::demux;
 
-#include <ppbox/avformat/Format.h>
-using namespace ppbox::avformat;
+#include <just/avformat/Format.h>
+using namespace just::avformat;
 
 #include <framework/logger/Logger.h>
 #include <framework/logger/StreamRecord.h>
 
-FRAMEWORK_LOGGER_DECLARE_MODULE_LEVEL("ppbox.rtspc.RtpRawDemuxer", framework::logger::Debug);
+FRAMEWORK_LOGGER_DECLARE_MODULE_LEVEL("just.rtspc.RtpRawDemuxer", framework::logger::Debug);
 
-namespace ppbox
+namespace just
 {
     namespace rtspc
     {
 
         RtpRawDemuxer::RtpRawDemuxer(
             boost::asio::io_service & io_svc, 
-            ppbox::data::PacketMedia & media)
+            just::data::PacketMedia & media)
             : RtpDemuxer(io_svc, media)
         {
         }
@@ -46,7 +46,7 @@ namespace ppbox
             std::vector<RtpInfo> const & rtp_infos = 
                 media.rtsp_source().rtp_infos();
 
-            using namespace ppbox::avbase;
+            using namespace just::avbase;
             using namespace framework::string;
 
             for (size_t i = 0; i < rtp_infos.size(); ++i) {
@@ -80,4 +80,4 @@ namespace ppbox
         }
 
     } // namespace rtspc
-} // namespace ppbox
+} // namespace just

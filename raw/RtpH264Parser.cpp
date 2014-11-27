@@ -1,19 +1,19 @@
 // RtpH264Parser.cpp
 
-#include "ppbox/rtspc/Common.h"
-#include "ppbox/rtspc/raw/RtpH264Parser.h"
+#include "just/rtspc/Common.h"
+#include "just/rtspc/raw/RtpH264Parser.h"
 
-#include <ppbox/avbase/stream/SampleBuffers.h>
-using namespace ppbox::avbase;
-#include <ppbox/avcodec/avc/AvcEnum.h>
-using namespace ppbox::avcodec;
+#include <just/avbase/stream/SampleBuffers.h>
+using namespace just::avbase;
+#include <just/avcodec/avc/AvcEnum.h>
+using namespace just::avcodec;
 
 #include <framework/system/BytesOrder.h>
 #include <framework/string/Base64.h>
 #include <framework/string/Slice.h>
 using namespace framework::string;
 
-namespace ppbox
+namespace just
 {
     namespace rtspc
     {
@@ -136,4 +136,4 @@ namespace ppbox
         }
 
     } // namespace rtspc
-} // namespace ppbox
+} // namespace just

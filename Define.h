@@ -1,13 +1,13 @@
 // Define.h
 
-#ifndef _PPBOX_RTSPC_DEFINE_H_
-#define _PPBOX_RTSPC_DEFINE_H_
+#ifndef _JUST_RTSPC_DEFINE_H_
+#define _JUST_RTSPC_DEFINE_H_
 
-#include "ppbox/common/VersionDefine.h" // for VERSION
+#include "just/common/VersionDefine.h" // for VERSION
 
-#define NAME ppbox_rtspd
+#define NAME just_rtspd
 
-#define BEGIN_NAME_SPACE namespace ppbox { namespace rtspc {
+#define BEGIN_NAME_SPACE namespace just { namespace rtspc {
 
 #define END_NAME_SPACE }}
 

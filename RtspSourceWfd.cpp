@@ -1,7 +1,7 @@
 // RtspSourceWfd.cpp
 
-#include "ppbox/rtspc/Common.h"
-#include "ppbox/rtspc/RtspSourceWfd.h"
+#include "just/rtspc/Common.h"
+#include "just/rtspc/RtspSourceWfd.h"
 
 #include <util/protocol/rtsp/RtspTransport.h>
 using namespace util::protocol;
@@ -12,12 +12,12 @@ using namespace util::protocol;
 #include <framework/logger/StreamRecord.h>
 #include <framework/logger/StringRecord.h>
 
-namespace ppbox
+namespace just
 {
     namespace rtspc
     {
 
-        FRAMEWORK_LOGGER_DECLARE_MODULE_LEVEL("ppbox.rtspc.RtspSourceWfd", framework::logger::Debug);
+        FRAMEWORK_LOGGER_DECLARE_MODULE_LEVEL("just.rtspc.RtspSourceWfd", framework::logger::Debug);
 
         using util::protocol::rtsp_field::f_range;
         using util::protocol::rtsp_field::f_transport;
@@ -147,4 +147,4 @@ namespace ppbox
         }
 
     } // namespace rtspc
-} // namespace ppbox
+} // namespace just

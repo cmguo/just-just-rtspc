@@ -1,9 +1,9 @@
 // RtpInfo.h
 
-#ifndef _PPBOX_RTSPC_RTP_INFO_H_
-#define _PPBOX_RTSPC_RTP_INFO_H_
+#ifndef _JUST_RTSPC_RTP_INFO_H_
+#define _JUST_RTSPC_RTP_INFO_H_
 
-namespace ppbox
+namespace just
 {
     namespace rtspc
     {
@@ -32,6 +32,6 @@ namespace ppbox
         };
 
     } // namespace data
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_RTSPC_RTP_INFO_H_
+#endif // _JUST_RTSPC_RTP_INFO_H_

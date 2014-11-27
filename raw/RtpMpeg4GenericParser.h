@@ -1,14 +1,14 @@
 // RtpMpeg4GenericParser.h
 
-#ifndef _PPBOX_RTSPC_TS_RTP_MPEG4_GENERIC_PARSER_H_
-#define _PPBOX_RTSPC_TS_RTP_MPEG4_GENERIC_PARSER_H_
+#ifndef _JUST_RTSPC_TS_RTP_MPEG4_GENERIC_PARSER_H_
+#define _JUST_RTSPC_TS_RTP_MPEG4_GENERIC_PARSER_H_
 
-#include "ppbox/rtspc/RtpParser.h"
+#include "just/rtspc/RtpParser.h"
 
-#include <ppbox/avcodec/avc/AvcConfigHelper.h>
-#include <ppbox/avcodec/nalu/NaluHelper.h>
+#include <just/avcodec/avc/AvcConfigHelper.h>
+#include <just/avcodec/nalu/NaluHelper.h>
 
-namespace ppbox
+namespace just
 {
     namespace rtspc
     {
@@ -23,15 +23,15 @@ namespace ppbox
 
         public:
             virtual bool push(
-                ppbox::demux::StreamInfo & info,
+                just::demux::StreamInfo & info,
                 boost::system::error_code & ec);
 
             virtual bool push(
-                ppbox::demux::Sample & sample,
+                just::demux::Sample & sample,
                 boost::system::error_code & ec);
 
             virtual bool before_seek(
-                ppbox::demux::Sample & sample,
+                just::demux::Sample & sample,
                 boost::system::error_code & ec);
 
         private:
@@ -40,9 +40,9 @@ namespace ppbox
             size_t index_delta_length_;
         };
 
-        PPBOX_REGISTER_RTP_PARSER("mpeg4-generic", RtpMpeg4GenericParser);
+        JUST_REGISTER_RTP_PARSER("mpeg4-generic", RtpMpeg4GenericParser);
 
     } // namespace rtspc
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_RTSPC_TS_RTP_MPEG4_GENERIC_PARSER_H_
+#endif // _JUST_RTSPC_TS_RTP_MPEG4_GENERIC_PARSER_H_

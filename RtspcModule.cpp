@@ -1,17 +1,17 @@
 // RtspcModule.cpp
 
-#include "ppbox/rtspc/Common.h"
-#include "ppbox/rtspc/RtspcModule.h"
-#include "ppbox/rtspc/ClassRegister.h"
+#include "just/rtspc/Common.h"
+#include "just/rtspc/RtspcModule.h"
+#include "just/rtspc/ClassRegister.h"
 
-namespace ppbox
+namespace just
 {
     namespace rtspc
     {
 
         RtspcModule::RtspcModule(
             util::daemon::Daemon & daemon)
-            : ppbox::common::CommonModuleBase<RtspcModule>(daemon, "RtspcModule")
+            : just::common::CommonModuleBase<RtspcModule>(daemon, "RtspcModule")
         {
         }
 
@@ -30,4 +30,4 @@ namespace ppbox
         }
 
     } // namespace rtspc
-} // namespace ppbox
+} // namespace just

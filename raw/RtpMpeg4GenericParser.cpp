@@ -1,13 +1,13 @@
 // RtpMpeg4GenericParser.cpp
 
-#include "ppbox/rtspc/Common.h"
-#include "ppbox/rtspc/raw/RtpMpeg4GenericParser.h"
+#include "just/rtspc/Common.h"
+#include "just/rtspc/raw/RtpMpeg4GenericParser.h"
 
-#include <ppbox/avbase/stream/SampleBuffers.h>
-#include <ppbox/avbase/stream/BitsIStream.h>
-using namespace ppbox::avbase;
-#include <ppbox/avcodec/avc/AvcEnum.h>
-using namespace ppbox::avcodec;
+#include <just/avbase/stream/SampleBuffers.h>
+#include <just/avbase/stream/BitsIStream.h>
+using namespace just::avbase;
+#include <just/avcodec/avc/AvcEnum.h>
+using namespace just::avcodec;
 
 #include <util/buffers/CycleBuffers.h>
 
@@ -18,7 +18,7 @@ using namespace framework::string;
 
 #include <algorithm>
 
-namespace ppbox
+namespace just
 {
     namespace rtspc
     {
@@ -107,4 +107,4 @@ namespace ppbox
         }
 
     } // namespace rtspc
-} // namespace ppbox
+} // namespace just

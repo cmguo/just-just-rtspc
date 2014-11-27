@@ -1,11 +1,11 @@
 // RtpRawDemuxer.h
 
-#ifndef _PPBOX_RTSPC_RAW_RTP_RAW_DEMUXER_H_
-#define _PPBOX_RTSPC_RAW_RTP_RAW_DEMUXER_H_
+#ifndef _JUST_RTSPC_RAW_RTP_RAW_DEMUXER_H_
+#define _JUST_RTSPC_RAW_RTP_RAW_DEMUXER_H_
 
-#include "ppbox/rtspc/RtpDemuxer.h"
+#include "just/rtspc/RtpDemuxer.h"
 
-namespace ppbox
+namespace just
 {
     namespace rtspc
     {
@@ -18,7 +18,7 @@ namespace ppbox
         public:
             RtpRawDemuxer(
                 boost::asio::io_service & io_svc, 
-                ppbox::data::PacketMedia & media);
+                just::data::PacketMedia & media);
 
             virtual ~RtpRawDemuxer();
 
@@ -27,9 +27,9 @@ namespace ppbox
                 boost::system::error_code & ec);
         };
 
-        PPBOX_REGISTER_PACKET_DEMUXER("rtp", RtpRawDemuxer);
+        JUST_REGISTER_PACKET_DEMUXER("rtp", RtpRawDemuxer);
 
     } // namespace rtspc
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_RTSPC_RAW_RTP_RAW_DEMUXER_H_
+#endif // _JUST_RTSPC_RAW_RTP_RAW_DEMUXER_H_

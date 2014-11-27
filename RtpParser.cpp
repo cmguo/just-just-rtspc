@@ -1,18 +1,18 @@
 // RtpParser.cpp
 
-#include "ppbox/rtspc/Common.h"
-#include "ppbox/rtspc/RtpParser.h"
-#include "ppbox/rtspc/RtpParser.h"
+#include "just/rtspc/Common.h"
+#include "just/rtspc/RtpParser.h"
+#include "just/rtspc/RtpParser.h"
 
-#include <ppbox/avformat/Error.h>
-using namespace ppbox::avformat;
-using namespace ppbox::demux;
+#include <just/avformat/Error.h>
+using namespace just::avformat;
+using namespace just::demux;
 
 #include <util/protocol/rtsp/rtp/RtpPacket.h>
 
 #include <framework/system/BytesOrder.h>
 
-namespace ppbox
+namespace just
 {
     namespace rtspc
     {
@@ -104,4 +104,4 @@ namespace ppbox
         }
 
     } // namespace rtspc
-} // namespace ppbox
+} // namespace just

@@ -1,13 +1,13 @@
 // RtpParser.h
 
-#ifndef _PPBOX_RTSPC_RTP_PARSER_H_
-#define _PPBOX_RTSPC_RTP_PARSER_H_
+#ifndef _JUST_RTSPC_RTP_PARSER_H_
+#define _JUST_RTSPC_RTP_PARSER_H_
 
-#include <ppbox/demux/base/DemuxBase.h>
+#include <just/demux/base/DemuxBase.h>
 
 #include <util/tools/ClassFactory.h>
 
-namespace ppbox
+namespace just
 {
     namespace rtspc
     {
@@ -21,20 +21,20 @@ namespace ppbox
 
         public:
             virtual bool push(
-                ppbox::demux::StreamInfo & info,
+                just::demux::StreamInfo & info,
                 boost::system::error_code & ec);
 
             virtual bool push(
-                ppbox::demux::Sample & sample,
+                just::demux::Sample & sample,
                 boost::system::error_code & ec);
 
             virtual bool before_seek(
-                ppbox::demux::Sample & sample,
+                just::demux::Sample & sample,
                 boost::system::error_code & ec);
 
         protected:
             static bool is_mark(
-                ppbox::demux::Sample & sample);
+                just::demux::Sample & sample);
 
             template <typename ConstBuffers>
             void push(
@@ -44,7 +44,7 @@ namespace ppbox
             }
 
         private:
-            ppbox::demux::Sample sample_;
+            just::demux::Sample sample_;
         };
 
         struct RtpParserTraits
@@ -59,8 +59,8 @@ namespace ppbox
         typedef util::tools::ClassFactory<RtpParserTraits> RtpParserFactory;
 
     } // namespace rtspc
-} // namespace ppbox
+} // namespace just
 
-#define PPBOX_REGISTER_RTP_PARSER(key, cls) UTIL_REGISTER_CLASS(ppbox::rtspc::RtpParserFactory, key, cls)
+#define JUST_REGISTER_RTP_PARSER(key, cls) UTIL_REGISTER_CLASS(just::rtspc::RtpParserFactory, key, cls)
 
-#endif // _PPBOX_RTSPC_RTP_PARSER_H_
+#endif // _JUST_RTSPC_RTP_PARSER_H_

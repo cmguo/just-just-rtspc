@@ -1,19 +1,19 @@
 // RtspMedia.h
 
-#ifndef _PPBOX_RTSPC_RTSP_MEDIA_H_
-#define _PPBOX_RTSPC_RTSP_MEDIA_H_
+#ifndef _JUST_RTSPC_RTSP_MEDIA_H_
+#define _JUST_RTSPC_RTSP_MEDIA_H_
 
-#include "ppbox/rtspc/RtspSource.h"
+#include "just/rtspc/RtspSource.h"
 
-#include <ppbox/data/packet/PacketMedia.h>
+#include <just/data/packet/PacketMedia.h>
 
-namespace ppbox
+namespace just
 {
     namespace rtspc
     {
 
         class RtspMedia
-            : public ppbox::data::PacketMedia
+            : public just::data::PacketMedia
         {
         public:
             RtspMedia(
@@ -34,16 +34,16 @@ namespace ppbox
 
         public:
             virtual bool get_basic_info(
-                ppbox::avbase::MediaBasicInfo & info,
+                just::avbase::MediaBasicInfo & info,
                 boost::system::error_code & ec) const;
 
             virtual bool get_info(
-                ppbox::avbase::MediaInfo & info,
+                just::avbase::MediaInfo & info,
                 boost::system::error_code & ec) const;
 
         public:
             virtual bool get_packet_feature(
-                ppbox::data::PacketFeature & feature,
+                just::data::PacketFeature & feature,
                 boost::system::error_code & ec) const;
 
             virtual util::stream::Source & source();
@@ -61,12 +61,12 @@ namespace ppbox
 
         private:
             RtspSource * source_;
-            ppbox::avbase::MediaInfo info_;
+            just::avbase::MediaInfo info_;
         };
 
-        PPBOX_REGISTER_MEDIA_BY_PROTOCOL("rtsp", RtspMedia);
+        JUST_REGISTER_MEDIA_BY_PROTOCOL("rtsp", RtspMedia);
 
     } // data
-} // ppbox
+} // just
 
-#endif // _PPBOX_RTSPC_RTSP_MEDIA_H_
+#endif // _JUST_RTSPC_RTSP_MEDIA_H_
