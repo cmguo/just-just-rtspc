@@ -15,8 +15,8 @@ namespace just
         {
         public:
             RtpTsBuffer()
-                : iter_(packets_)
-                , buf_(*this)
+                : buf_(*this)
+                , iter_(packets_)
             {
             }
 
@@ -36,16 +36,18 @@ namespace just
 
                 std::deque<boost::asio::const_buffer> datas;
                 BufferIterator iter(iter_);
-                boost::asio::const_buffer const & buf(iter.buf);
                 for (size_t i = 0; i < blocks.size(); ++i) {
                     pos_type pos = blocks[i].offset;
+                    size_t size = blocks[i].size;
+                    //std::cout << "[RtpTsBuffer::get] block: " << (size_t)pos << "/" << size << std::endl;
                     assert(!iter.invalid(pos));
                     iter.set(pos);
-                    size_t size = blocks[i].size;
+                    boost::asio::const_buffer buf = iter.buf + iter.off;
                     while (size > boost::asio::buffer_size(buf)) {
-                        datas.push_back(buf);
+                        datas.push_back(boost::asio::buffer(buf));
                         size -= boost::asio::buffer_size(buf);
                         iter.inc();
+                        buf = iter.buf;
                     }
                     datas.push_back(boost::asio::buffer(buf, size));
                 }
@@ -114,6 +116,7 @@ namespace just
                 if (mode == std::ios_base::in) {
                     iter_.set(position);
                     buf_ = iter_.buf;
+                    buf_.consume(iter_.off);
                     return position;
                 } else if (mode == std::ios_base::out) {
                     return pos_type(-1);
@@ -123,6 +126,10 @@ namespace just
             }
 
         private:
+            typedef util::buffers::StlBuffer<
+                util::buffers::detail::_read, 
+                boost::uint8_t> buf_t; 
+
             struct BufferIterator
             {
                 std::deque<Sample> const & packets_;
@@ -133,9 +140,10 @@ namespace just
                 size_t index2;
                 pos_type pos2;
                 boost::asio::const_buffer buf;
+                off_type off;
 
                 BufferIterator(
-                    std::deque<Sample> packets)
+                    std::deque<Sample> const & packets)
                     : packets_(packets)
                     , pos(0)
                     , end(0)
@@ -143,6 +151,7 @@ namespace just
                     , pos1(0)
                     , index2(0)
                     , pos2(0)
+                    , off(0)
                 {
                 }
 
@@ -155,13 +164,22 @@ namespace just
                 void set(
                     pos_type p)
                 {
+                    if (p == end) {
+                        index1 = packets_.size();
+                        index2 = 0;
+                        pos1 = pos2 = end;
+                        off = 0;
+                        buf = boost::asio::const_buffer();
+                        return;
+                    }
+
                     if (p < pos1) {
                         index1 = 0;
                         index2 = 0;
                         pos1 = pos;
                         pos2 = pos;
                     }
-                    boost::uint64_t off = p - pos1;
+                    off = p - pos1;
                     while (off > packets_[index1].size) {
                         off -= packets_[index1].size;
                         pos1 += packets_[index1].size;
@@ -170,13 +188,17 @@ namespace just
                         pos2 = pos1;
                     }
                     std::deque<boost::asio::const_buffer> const & packet = packets_[index1].data;
+                    if (p < pos2) {
+                        index2 = 0;
+                        pos2 = pos1;
+                    }
                     off = p - pos2;
                     while (off > boost::asio::buffer_size(packet[index2])) {
                         off -= boost::asio::buffer_size(packet[index2]);
                         pos2 += boost::asio::buffer_size(packet[index2]);
                         ++index2;
                     }
-                    buf = packet[index2] + off;
+                    buf = packet[index2];
                 }
 
                 void inc()
@@ -189,6 +211,7 @@ namespace just
                             index2 = 0;
                         }
                         buf = packets_[index1].data[index2];
+                        off = 0;
                     } while (boost::asio::buffer_size(buf) == 0);
                 }
 
@@ -201,10 +224,8 @@ namespace just
 
         private:
             std::deque<Sample> packets_;
+            buf_t buf_;
             BufferIterator iter_;
-            util::buffers::StlBuffer<
-                util::buffers::detail::_write, 
-                boost::uint8_t> buf_;
             std::vector<boost::uint64_t> offsets_;
         };
 

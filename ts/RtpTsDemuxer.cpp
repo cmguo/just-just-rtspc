@@ -26,7 +26,7 @@ namespace just
             boost::asio::io_service & io_svc, 
             just::data::PacketMedia & media)
             : RtpDemuxer(io_svc, media)
-            , ts_parser_(new RtpTsParser(io_svc))
+            , ts_parser_(NULL)
         {
         }
 
@@ -42,7 +42,11 @@ namespace just
         {
             RtpDemuxer::check_open(ec);
 
-            add_parser(0, ts_parser_);
+            if (ts_parser_ == NULL) {
+                ts_parser_ = new RtpTsParser(get_io_service());
+                ts_parser_->open();
+                add_parser(0, ts_parser_);
+            }
 
             Sample sample;
             if (peek_sample(sample, ec)) {

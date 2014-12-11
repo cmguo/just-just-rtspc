@@ -28,6 +28,8 @@ namespace just
             virtual ~RtpTsParser();
 
         public:
+            void open();
+
             void get_streams(
                 std::vector<just::demux::StreamInfo> & streams);
 
