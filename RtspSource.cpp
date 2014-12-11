@@ -240,9 +240,8 @@ namespace just
         bool RtspSource::close(
             boost::system::error_code & ec)
         {
-            stop();
-            ec.clear();
-            return true;
+            stop(ec);
+            return !ec;
         }
 
         bool RtspSource::cancel(

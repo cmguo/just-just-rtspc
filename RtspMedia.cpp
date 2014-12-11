@@ -31,6 +31,9 @@ namespace just
             info_.format_type = url.param("format");
             if (info_.format_type.empty())
                 info_.format_type = "rtp";
+            if (info_.format_type.compare(0, 4, "rtp-") == 0) {
+                info_.flags |= just::data::PacketMediaFlags::f_has_time;
+            }
         }
 
         RtspMedia::~RtspMedia()

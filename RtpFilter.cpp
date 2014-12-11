@@ -52,7 +52,7 @@ namespace just
                 if (session.parser == NULL)
                     continue;
                 if (session.parser->push(sample, ec)) {
-                    if (sample.memory) {
+                    if (!sample.data.empty()) {
                         sample.append(rtcp_sample_);
                         LOG_TRACE("[get_sample] time: " << sample.dts << " size: " << sample.size);
                         return true;

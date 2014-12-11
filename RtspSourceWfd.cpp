@@ -115,6 +115,7 @@ namespace just
                                 req2_head.path = content_base_;
                             } else if (param.compare(0, 19, "wfd_trigger_method:") == 0) {
                                 req2_head.method = RtspRequestHead::setup;
+                                rtp_infos_.resize(1);
                                 ++setup_step_;
                             }
                         }
