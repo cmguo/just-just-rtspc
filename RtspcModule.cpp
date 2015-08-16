@@ -19,14 +19,16 @@ namespace just
         {
         }
 
-        boost::system::error_code RtspcModule::startup()
+        bool RtspcModule::startup(
+            boost::system::error_code & ec)
         {
-            boost::system::error_code ec;
-            return ec;
+            return true;
         }
 
-        void RtspcModule::shutdown()
+        bool RtspcModule::shutdown(
+            boost::system::error_code & ec)
         {
+            return true;
         }
 
     } // namespace rtspc
