@@ -49,9 +49,7 @@ namespace just
             boost::uint64_t end, 
             boost::system::error_code & ec)
         {
-            framework::string::Url url1(url);
-            url1.encode();
-            request_.head().path = url1.to_string();
+            request_.head().path = url.to_string();
             is_open(ec);
             return !ec;
         }
@@ -62,9 +60,7 @@ namespace just
             boost::uint64_t end, 
             response_type const & resp)
         {
-            framework::string::Url url1(url);
-            url1.encode();
-            request_.head().path = url1.to_string();
+            request_.head().path = url.to_string();
             resp_ = resp;
             framework::network::NetName addr(url.host_svc());
             if (addr.svc().empty())
